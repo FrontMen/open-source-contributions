@@ -1,0 +1,49 @@
+{
+  "name": "gql-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rimraf dist && babel src --out-dir dist --ignore '**/*.spec.js'",
+    "dev": "nodemon --exec yarn restart",
+    "restart": "yarn build && node dist/index.js",
+    "test": "jest --forceExit --detectOpenHandles --runInBand"
+  },
+  "dependencies": {
+    "@graphql-modules/core": "^0.4.0",
+    "@graphql-modules/logger": "^0.2.3",
+    "apollo-fetch": "^0.7.0",
+    "apollo-link-context": "^1.0.14",
+    "apollo-link-http": "^1.5.11",
+    "apollo-server": "^2.3.3",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "graphql-tools": "^4.0.4",
+    "lodash.merge": "^4.6.1",
+    "mongoose": "^5.4.9",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
+    "@babel/preset-env": "^7.3.1",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.0.0",
+    "crossenv": "^0.0.2-security",
+    "eslint": "^5.13.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.2.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.0.0",
+    "nodemon": "^1.18.9",
+    "prettier": "^1.16.4"
+  }
+}
