@@ -9,6 +9,7 @@ import {
   RenameRootFields,
   FilterRootFields
 } from 'graphql-tools'
+import { GITHUB_AUTH_TOKEN } from './config'
 
 /*
  * - Create the Github schema and set the necessary headers
@@ -20,8 +21,7 @@ export const createGithubSchema = async () => {
   const http = new HttpLink({ uri: 'https://api.github.com/graphql', fetch })
   const link = setContext(() => ({
     headers: {
-      // TODO make constant
-      Authorization: 'bearer 2977ec298662fbc718d30518520e544c981d4450'
+      Authorization: `bearer ${GITHUB_AUTH_TOKEN}`
     }
   })).concat(http)
 

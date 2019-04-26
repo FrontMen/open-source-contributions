@@ -16,6 +16,7 @@
     "apollo-link-context": "^1.0.14",
     "apollo-link-http": "^1.5.11",
     "apollo-server": "^2.3.3",
+    "firebase-admin": "^7.3.0",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
     "graphql-tools": "^4.0.4",
