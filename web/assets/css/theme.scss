@@ -1,0 +1,40 @@
+// Import Bulma's core
+@import "~bulma/sass/utilities/_all";
+
+$family-primary: Titillium Web, sans-serif;
+$family-secondary: Stratum, sans-serif;
+
+// Set your colors
+$primary: #1f1e32;
+$primary-invert: findColorInvert($primary);
+$info: #00cccc;
+$info-invert: findColorInvert($primary);
+$link: #ff5900;
+$link-invert: findColorInvert($primary);
+$warning: #ff5900;
+$warning-invert: findColorInvert($primary);
+$twitter: #4099FF;
+$twitter-invert: findColorInvert($twitter);
+
+// Setup $colors to use as bulma classes (e.g. 'is-twitter')
+$colors: (
+    "white": ($white, $black),
+    "black": ($black, $white),
+    "light": ($light, $light-invert),
+    "dark": ($dark, $dark-invert),
+    "primary": ($primary, $primary-invert),
+    "info": ($info, $info-invert),
+    "success": ($success, $success-invert),
+    "warning": ($warning, $warning-invert),
+    "danger": ($danger, $danger-invert),
+    "twitter": ($twitter, $twitter-invert)
+);
+
+// Links
+// $link: $primary;
+// $link-invert: $primary-invert;
+$link-focus-border: red;
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
