@@ -2,7 +2,9 @@ import { ApolloServer, makeExecutableSchema } from 'apollo-server'
 import gql from 'graphql-tag'
 import { mergeSchemas } from 'graphql-tools'
 import { createGithubSchema, createGithubResolvers } from './github'
-import admin from './firebase'
+import { ContributionAPI } from './contribution.provider'
+
+const api = new ContributionAPI()
 
 const typeDefs = gql`
   type Contribution {
@@ -21,12 +23,7 @@ const localSchema = makeExecutableSchema({
   resolvers: {
     Query: {
       async getContributions() {
-        // TODO put actual firebase query here to retrieve data
-        const results = await admin
-          .firestore()
-          .collection('projects')
-          .get()
-        const contributions = results.docs.map(i => i.data())
+        const contributions = await api.getAllContributions()
         return contributions
       }
     }
