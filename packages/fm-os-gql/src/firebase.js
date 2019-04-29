@@ -1,5 +1,7 @@
 import * as admin from 'firebase-admin'
-import { FIREBASE_SERVICE_ACCOUNT } from './config'
+const FIREBASE_SERVICE_ACCOUNT = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT
+)
 
 admin.initializeApp({
   credential: admin.credential.cert(FIREBASE_SERVICE_ACCOUNT),

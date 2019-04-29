@@ -5,8 +5,9 @@
   "license": "MIT",
   "scripts": {
     "build": "rimraf dist && babel src --out-dir dist --ignore '**/*.spec.js'",
-    "dev": "nodemon --exec yarn restart",
-    "restart": "yarn build && node dist/index.js",
+    "dev": "nodemon --exec npm run restart",
+    "restart": "npm run build && npm run start",
+    "start": "node -r ./src/scripts/env.js ./dist/index.js",
     "test": "jest --forceExit --detectOpenHandles --runInBand"
   },
   "dependencies": {
@@ -16,6 +17,7 @@
     "apollo-link-context": "^1.0.14",
     "apollo-link-http": "^1.5.11",
     "apollo-server": "^2.3.3",
+    "dotenv": "^7.0.0",
     "firebase-admin": "^7.3.0",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
@@ -45,6 +47,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^24.0.0",
     "nodemon": "^1.18.9",
-    "prettier": "^1.16.4"
+    "prettier": "^1.16.4",
+    "rimraf": "^2.6.3"
   }
 }

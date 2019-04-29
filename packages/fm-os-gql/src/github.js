@@ -9,8 +9,8 @@ import {
   RenameRootFields,
   FilterRootFields
 } from 'graphql-tools'
-import { GITHUB_AUTH_TOKEN } from './config'
 
+const GITHUB_AUTH_TOKEN = process.env.GITHUB_AUTH_TOKEN
 /*
  * - Create the Github schema and set the necessary headers
  * - Transform the schema by prefixing all Types to prevent any conflict between schemas

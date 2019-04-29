@@ -1,6 +1,7 @@
 node_modules
 *.log
 .DS_Store
+.env
 /tmp
 /dist
 /src/config.js
