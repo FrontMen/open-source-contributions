@@ -1,6 +1,6 @@
 <template>
-  <footer class="footer">
-    <div class="content has-text-centered">
+  <footer class="footer is-white">
+    <div class="content has-text-centered ">
       <p>Made by <a href="https://frontmen.nl">Frontmen</a>.</p>
     </div>
   </footer>
@@ -11,3 +11,9 @@ export default {
   name: 'Footer'
 }
 </script>
+
+<style scoped>
+.is-white {
+  background-color: white;
+}
+</style>
