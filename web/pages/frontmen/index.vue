@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { inputMessages, notificationMessages } from '@/utils/messages.mock.js'
+import { inputMessages, notificationMessages } from '@/constants/messages.js'
 
 export default {
   name: 'AdminOverview',
@@ -62,7 +62,10 @@ export default {
       ownerAndRepo: '',
       title: '',
       description: '',
-      owner: { name: '', avatar: '' }
+      owner: {
+        name: '',
+        avatar: ''
+      }
     }
   }),
   async mounted() {
