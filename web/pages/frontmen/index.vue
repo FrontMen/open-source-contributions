@@ -120,10 +120,6 @@ export default {
         const project = await response.json()
         this.projectForm.isLoading = false
         if (project.message) {
-          alert(
-            project.message +
-              ' Woops! Are you sure you have entered both the owner and repo name correctly?'
-          )
           this.projectForm.fetchStatus = 'failed'
         } else {
           this.projectForm = {
