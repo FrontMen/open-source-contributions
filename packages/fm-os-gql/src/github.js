@@ -70,9 +70,9 @@ export const createGithubResolvers = transformedGithubSchema => {
   return {
     Contribution: {
       repository: {
-        fragment: '... on Contribution { id }',
+        fragment: '... on Contribution { repositoryId }',
         resolve(contribution, _, context, info) {
-          const [owner, name] = contribution.id.split('/')
+          const [owner, name] = contribution.repositoryId.split('/')
           return info.mergeInfo.delegateToSchema({
             schema: transformedGithubSchema,
             operation: 'query',

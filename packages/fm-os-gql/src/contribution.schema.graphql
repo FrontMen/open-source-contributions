@@ -1,0 +1,31 @@
+type Contribution {
+  title: String
+  description: String
+  repositoryId: String!
+  id: ID!
+}
+
+input getContributionInput {
+  id: ID!
+}
+
+input addContributionInput {
+  title: String
+  description: String
+  repositoryId: String!
+}
+
+input updateContributionInput {
+  id: ID!
+  newData: addContributionInput!
+}
+
+type Query {
+  getContributions: [Contribution]
+  getContribution(input: getContributionInput): Contribution
+}
+
+type Mutation {
+  addContribution(input: addContributionInput): Contribution
+  updateContribution(input: updateContributionInput): Contribution
+}

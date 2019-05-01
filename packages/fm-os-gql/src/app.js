@@ -1,30 +1,32 @@
 import { makeExecutableSchema } from 'apollo-server'
 import gql from 'graphql-tag'
 import { mergeSchemas } from 'graphql-tools'
+import { importSchema } from 'graphql-import'
 import { createGithubSchema, createGithubResolvers } from './github'
 import { ContributionAPI } from './contribution.provider'
 
+const schema = importSchema(`./src/contribution.schema.graphql`)
 const api = new ContributionAPI()
 
-const typeDefs = gql`
-  type Contribution {
-    title: String
-    description: String
-    id: String
-  }
-
-  type Query {
-    getContributions: [Contribution]
-  }
-`
-
 const localSchema = makeExecutableSchema({
-  typeDefs,
+  typeDefs: [schema],
   resolvers: {
     Query: {
       async getContributions() {
-        const contributions = await api.getAllContributions()
-        return contributions
+        return api.getAllContributions()
+      },
+      async getContribution(_, { input }) {
+        const { id } = input
+        return api.getContribution(id)
+      }
+    },
+    Mutation: {
+      async addContribution(_, { input }) {
+        return api.addContribution(input)
+      },
+      async updateContribution(_, { input }) {
+        const { id, newData } = input
+        return api.updateContribution(id, newData)
       }
     }
   }
