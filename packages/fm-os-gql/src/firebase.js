@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin'
+
 const FIREBASE_SERVICE_ACCOUNT = JSON.parse(
   process.env.FIREBASE_SERVICE_ACCOUNT
 )
