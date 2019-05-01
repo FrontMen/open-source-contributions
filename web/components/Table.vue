@@ -22,18 +22,22 @@
         </span>
       </b-table-column>
       <b-table-column field="date" label="Source" centered>
-        <a :href="props.row.html_url">
-          <b-button
-            size="is-small"
-            icon-left="github-circle"
-            class="is-warning is-family-secondary is-radiusless	"
-          >
-          </b-button>
+        <a :href="props.row.html_url" target="_blank">
+          <IconButton
+            type="is-warning"
+            icon="github-circle"
+            mobile-text="SOURCE"
+          />
         </a>
       </b-table-column>
-      <b-table-column field="actions" centered>
-        <b-icon icon="pencil" type="is-grey" />
-        <b-icon icon="close-circle" type="is-danger" />
+      <b-table-column field="actions" label="Actions" centered>
+        <IconButton type="is-primary" icon="pencil" mobile-text="EDIT" />
+        <IconButton
+          type="is-danger"
+          icon="delete"
+          mobile-text="DELETE"
+          @click="$emit('setNotification', { type: 'deleteProject' })"
+        />
       </b-table-column>
     </template>
     <template slot="empty">
@@ -52,6 +56,9 @@
 <script>
 export default {
   name: 'Table',
+  components: {
+    IconButton: () => import('./IconButton')
+  },
   props: {
     data: {
       default: () => [],
@@ -64,3 +71,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.icon-button {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+</style>

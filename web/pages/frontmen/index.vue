@@ -1,76 +1,144 @@
 <template>
   <div>
     <Header />
-    <section class="section">
-      <div class="container">
-        <b-button
-          v-if="!isCreating"
-          icon-left="plus"
-          class="is-info is-radiusless add-button"
-          @click="toggleCreate"
-        >
-          ADD REPOSITORY
-        </b-button>
-        <template v-else>
-          <h1 class="title">Add a repository</h1>
-          <b-field
-            label="Github Repository name"
-            message="Fill in the name of the repository"
-          >
-            <b-input value="" icon="github-circle"></b-input>
-          </b-field>
-
-          <b-field
-            label="Optional Description"
-            message="Filling this in will override the github repository description in the view"
-          >
-            <b-input maxlength="200" type="textarea"></b-input>
-          </b-field>
-          <b-button
-            icon-left="cancel"
-            class="is-radiusless is-family-secondary cancel-button"
-            @click="toggleCreate"
-          >
-            CANCEL
-          </b-button>
-
-          <b-button
-            class="is-warning is-family-secondary is-radiusless	"
-            icon-left="check"
-          >
-            SUBMIT
-          </b-button>
-        </template>
-        <Table v-show="!isCreating" :data="projects" :is-loading="isLoading" />
-      </div>
-    </section>
+    <RepoForm
+      v-if="isCreating"
+      :project-form="projectForm"
+      :fetch-status="projectForm.fetchStatus"
+      :input-messages="inputMessages"
+      @toggleCreate="toggleCreate"
+      @fetchProject="fetchProject"
+      @setNotification="setNotification"
+    />
+    <Section>
+      <b-button
+        v-if="!isCreating"
+        icon-left="plus"
+        class="is-info is-radiusless add-button"
+        @click="toggleCreate"
+      >
+        ADD REPOSITORY
+      </b-button>
+      <Table
+        v-show="!isCreating"
+        :data="projects"
+        :is-loading="isLoading"
+        @setNotification="setNotification"
+      />
+    </Section>
     <Footer v-if="!isLoading && !isCreating" />
+    <Notification
+      v-if="currentNotification"
+      :is-open="currentNotification !== null"
+      :notification-settings="currentNotification"
+      @closeNotification="closeNotification"
+      @confirmNotification="confirmNotification"
+    />
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
-import Table from '@/components/Table'
+import { inputMessages, notificationMessages } from '@/constants/messages.js'
 
 export default {
   name: 'AdminOverview',
   components: {
-    Header,
-    Footer,
-    Table
+    Header: () => import('@/components/Header'),
+    Footer: () => import('@/components/Footer'),
+    Table: () => import('@/components/Table'),
+    Section: () => import('@/components/Section'),
+    RepoForm: () => import('@/components/RepoForm'),
+    Notification: () => import('@/components/Notification')
   },
   data: () => ({
+    currentNotification: null,
+    inputMessages: inputMessages,
     projects: [],
     isLoading: true,
-    isCreating: false
+    isCreating: false,
+    projectForm: {
+      isLoading: false,
+      fetchStatus: 'default',
+      ownerAndRepo: '',
+      title: '',
+      description: '',
+      owner: {
+        name: '',
+        avatar: ''
+      }
+    }
   }),
   async mounted() {
     await this.fetchProjects()
   },
   methods: {
+    resetProjectForm() {
+      this.projectForm = {
+        isLoading: false,
+        fetchStatus: 'default',
+        ownerAndRepo: '',
+        title: '',
+        description: '',
+        owner: { name: '', avatar: '' }
+      }
+    },
     toggleCreate() {
       this.isCreating = !this.isCreating
+      this.resetProjectForm()
+    },
+    replaceHypens(s) {
+      const string = s.replace('-', ' ')
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    },
+    setNotification({ type }) {
+      this.currentNotification = notificationMessages[type]
+    },
+    confirmNotification() {
+      switch (this.currentNotification.name) {
+        case 'deleteProject':
+          // todo: bind to delete mutation/api call
+          alert('project is deleted')
+          break
+        case 'cancelCreating':
+        case 'cancelEditing':
+          this.toggleCreate()
+          break
+      }
+    },
+    closeNotification() {
+      this.currentNotification = null
+    },
+    deleteProject() {
+      alert('project has been deleted')
+    },
+    async fetchProject() {
+      try {
+        this.projectForm.isLoading = true
+        const response = await fetch(
+          `https://api.github.com/repos/${this.projectForm.ownerAndRepo}`
+        )
+        const project = await response.json()
+        this.projectForm.isLoading = false
+        if (project.message) {
+          alert(
+            project.message +
+              ' Woops! Are you sure you have entered both the owner and repo name correctly?'
+          )
+          this.projectForm.fetchStatus = 'failed'
+        } else {
+          this.projectForm = {
+            ...this.projectForm,
+            title: this.replaceHypens(project.name),
+            description: project.description,
+            name: project.owner.login,
+            avatar: project.owner.avatar_url,
+            fetchStatus: 'success'
+          }
+        }
+        return project
+      } catch (err) {
+        throw err
+      }
     },
     async fetchProjects() {
       try {
@@ -85,7 +153,7 @@ export default {
           avatar: p.owner.avatar_url,
           stargazers_count: p.stargazers_count,
           forks_count: p.forks_count,
-          hmtl_url: p.html_url,
+          html_url: p.html_url,
           created_at: p.created_at
         }))
         this.projects = filteredProjects
@@ -99,12 +167,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .add-button {
-  margin-bottom: 2rem;
-}
-
-.cancel-button {
-  margin-right: 1rem;
+  margin-bottom: 1rem;
 }
 </style>
