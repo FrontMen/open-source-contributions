@@ -1,0 +1,28 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "description": "GraphQL Server for FM Open Source Contributions",
+  "env": {
+    "FIREBASE_SERVICE_ACCOUNT": {
+      "required": true
+    },
+    "GITHUB_AUTH_TOKEN": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "graphql-stitching",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
