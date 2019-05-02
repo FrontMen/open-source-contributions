@@ -73,6 +73,16 @@ export default {
       }
     }
   },
+  computed: {
+    fieldType() {
+      if (this.fetchStatus === 'success') return 'is-success'
+      if (this.fetchStatus === 'failed') return 'is-danger'
+      return null
+    },
+    submitText() {
+      return this.fetchStatus === 'success' ? 'SUBMIT' : 'CHECK'
+    }
+  },
   methods: {
     submitAction() {
       if (this.fetchStatus === 'success') {
@@ -83,16 +93,7 @@ export default {
       }
     }
   },
-  computed: {
-    fieldType() {
-      if (this.fetchStatus === 'success') return 'is-success'
-      if (this.fetchStatus === 'failed') return 'is-danger'
-      return null
-    },
-    submitText() {
-      return this.fetchStatus === 'success' ? 'SUBMIT' : 'CHECK'
-    }
-  }
+
 }
 </script>
 <style scoped>
