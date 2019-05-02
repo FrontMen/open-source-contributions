@@ -18,6 +18,7 @@
             </h2>
           </div>
           <div class="column align-right">
+            <img width="84px" src="@/static/chillicorn.png" />
             <img width="220px" src="@/static/heart-beating.gif" />
           </div>
         </div>
