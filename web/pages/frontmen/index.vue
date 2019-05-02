@@ -21,12 +21,14 @@
       </b-button>
       <Table
         v-show="!isCreating"
-        :data="projects"
-        :is-loading="isLoading"
+        :data="allContributions"
+        :is-loading="this.$apollo.queries.allContributions.loading"
         @setNotification="setNotification"
       />
     </Section>
-    <Footer v-if="!isLoading && !isCreating" />
+    <Footer
+      v-if="!this.$apollo.queries.allContributions.loading && !isCreating"
+    />
     <Notification
       v-if="currentNotification"
       :is-open="currentNotification !== null"
@@ -39,6 +41,7 @@
 
 <script>
 import { inputMessages, notificationMessages } from '@/constants/messages.js'
+import getContributions from '@/queries/getContributions'
 
 export default {
   name: 'AdminOverview',
@@ -50,11 +53,14 @@ export default {
     RepoForm: () => import('@/components/RepoForm'),
     Notification: () => import('@/components/Notification')
   },
+  apollo: {
+    allContributions: {
+      query: getContributions
+    }
+  },
   data: () => ({
     currentNotification: null,
     inputMessages: inputMessages,
-    projects: [],
-    isLoading: true,
     isCreating: false,
     projectForm: {
       isLoading: false,
@@ -68,9 +74,6 @@ export default {
       }
     }
   }),
-  async mounted() {
-    await this.fetchProjects()
-  },
   methods: {
     resetProjectForm() {
       this.projectForm = {
@@ -97,7 +100,7 @@ export default {
       switch (this.currentNotification.name) {
         case 'deleteProject':
           // todo: bind to delete mutation/api call
-          alert('project is deleted')
+          alert('Not yet implemented')
           break
         case 'cancelCreating':
         case 'cancelEditing':
@@ -132,29 +135,6 @@ export default {
           }
         }
         return project
-      } catch (err) {
-        throw err
-      }
-    },
-    async fetchProjects() {
-      try {
-        const response = await fetch(
-          'https://api.github.com/orgs/frontmen/repos'
-        )
-        const projects = await response.json()
-        const filteredProjects = await projects.map(p => ({
-          name: p.name,
-          description: p.description,
-          owner: p.owner.login,
-          avatar: p.owner.avatar_url,
-          stargazers_count: p.stargazers_count,
-          forks_count: p.forks_count,
-          html_url: p.html_url,
-          created_at: p.created_at
-        }))
-        this.projects = filteredProjects
-        this.isLoading = false
-        return projects
       } catch (err) {
         throw err
       }

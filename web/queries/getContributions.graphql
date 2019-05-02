@@ -4,9 +4,19 @@
     description
     id
     repository {
+      createdAt
       name
+      description
+      url
+      stargazers {
+        totalCount
+      }
+      forks {
+        totalCount
+      }
       owner {
         login
+        avatarUrl
       }
     }
   }

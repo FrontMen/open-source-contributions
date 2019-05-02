@@ -2,27 +2,27 @@
   <b-table :data="data.length ? data : []" :loading="isLoading" mobile-cards>
     <template slot-scope="props">
       <b-table-column field="name" label="Name">
-        {{ props.row.name }}
+        {{ props.row.title }}
       </b-table-column>
       <b-table-column field="owner" label="Owner">
-        <img :src="props.row.avatar" width="20" />
-        {{ props.row.owner }}
+        <img :src="props.row.repository.owner.avatarUrl" width="20" />
+        {{ props.row.repository.owner.login }}
       </b-table-column>
       <b-table-column field="stars" label="Stars">
         <b-icon icon="star" size="is-small" />
-        {{ props.row.stargazers_count }}
+        {{ props.row.repository.stargazers.totalCount }}
       </b-table-column>
       <b-table-column field="forks" label="Forks">
         <b-icon icon="source-fork" size="is-small" />
-        {{ props.row.forks_count }}
+        {{ props.row.repository.forks.totalCount }}
       </b-table-column>
-      <b-table-column field="data" label="Created" centered>
+      <b-table-column field="data" label="Created">
         <span class="tag is-info is-rounded">
-          {{ new Date(props.row.created_at).toLocaleDateString() }}
+          {{ new Date(props.row.repository.createdAt).toLocaleDateString() }}
         </span>
       </b-table-column>
-      <b-table-column field="date" label="Source" centered>
-        <a :href="props.row.html_url" target="_blank">
+      <b-table-column field="date" label="Source">
+        <a :href="props.row.repository.url" target="_blank">
           <IconButton
             type="is-warning"
             icon="github-circle"
@@ -30,7 +30,7 @@
           />
         </a>
       </b-table-column>
-      <b-table-column field="actions" label="Actions" centered>
+      <b-table-column field="actions" label="Actions">
         <IconButton type="is-primary" icon="pencil" mobile-text="EDIT" />
         <IconButton
           type="is-danger"

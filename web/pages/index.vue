@@ -4,20 +4,32 @@
     <section class="section">
       <div class="container">
         <div class="center">
-          <div v-if="loading" class="loader" />
-        </div>
-        <div>
-          Hier komt het resultaat
-          {{ allContributions }}
+          <div
+            v-if="this.$apollo.queries.allContributions.loading"
+            class="loader"
+          />
         </div>
         <div class="columns is-multiline">
-          <div v-for="(project, i) in projects" :key="i" class="column is-6">
-            <ProjectCard :project="project" />
+          <div
+            v-for="(project, i) in allContributions"
+            :key="i"
+            class="column is-6"
+          >
+            <ProjectCard
+              :title="project.title"
+              :description="project.description"
+              :owner-name="project.repository.owner.login"
+              :owner-avatar="project.repository.owner.avatarUrl"
+              :url="project.repository.url"
+              :star-count="project.repository.stargazers.totalCount"
+              :fork-count="project.repository.forks.totalCount"
+              :created-at="project.repository.createdAt"
+            />
           </div>
         </div>
       </div>
     </section>
-    <Footer v-if="!loading" />
+    <Footer v-if="!this.$apollo.queries.allContributions.loading" />
   </div>
 </template>
 
@@ -37,28 +49,6 @@ export default {
   apollo: {
     allContributions: {
       query: getContributions
-    }
-  },
-  data: () => ({
-    projects: [],
-    loading: true
-  }),
-  async mounted() {
-    await this.fetchProjects()
-  },
-  methods: {
-    async fetchProjects() {
-      try {
-        const response = await fetch(
-          'https://api.github.com/orgs/frontmen/repos'
-        )
-        const projects = await response.json()
-        this.projects = projects
-        this.loading = false
-        return projects
-      } catch (err) {
-        throw err
-      }
     }
   }
 }
