@@ -1,0 +1,13 @@
+{
+  allContributions: getContributions {
+    title
+    description
+    id
+    repository {
+      name
+      owner {
+        login
+      }
+    }
+  }
+}

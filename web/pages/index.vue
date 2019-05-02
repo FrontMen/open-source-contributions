@@ -6,6 +6,10 @@
         <div class="center">
           <div v-if="loading" class="loader" />
         </div>
+        <div>
+          Hier komt het resultaat
+          {{ allContributions }}
+        </div>
         <div class="columns is-multiline">
           <div v-for="(project, i) in projects" :key="i" class="column is-6">
             <ProjectCard :project="project" />
@@ -21,6 +25,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ProjectCard from '@/components/ProjectCard'
+import getContributions from '@/queries/getContributions'
 
 export default {
   name: 'Overview',
@@ -28,6 +33,11 @@ export default {
     Header,
     Footer,
     ProjectCard
+  },
+  apollo: {
+    allContributions: {
+      query: getContributions
+    }
   },
   data: () => ({
     projects: [],
