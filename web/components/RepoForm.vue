@@ -92,8 +92,7 @@ export default {
         this.$emit('fetchProject')
       }
     }
-  },
-
+  }
 }
 </script>
 <style scoped>
