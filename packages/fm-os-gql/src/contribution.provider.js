@@ -3,7 +3,7 @@ import admin from './firebase'
 
 export class ContributionAPI {
   constructor() {
-    this.collection = 'projects'
+    this.collection = 'contributions'
     this.db = admin.firestore()
   }
 
