@@ -8,6 +8,7 @@
       :input-messages="inputMessages"
       @toggleCreate="toggleCreate"
       @fetchProject="fetchProject"
+      @createProject="createProject"
       @setNotification="setNotification"
     />
     <Section>
@@ -42,6 +43,7 @@
 <script>
 import { inputMessages, notificationMessages } from '@/constants/messages.js'
 import getContributions from '@/queries/getContributions'
+import { createContribution, deleteContribution } from '@/queries/mutations.js'
 
 export default {
   name: 'AdminOverview',
@@ -60,12 +62,13 @@ export default {
   },
   data: () => ({
     currentNotification: null,
+    targetId: null,
     inputMessages: inputMessages,
     isCreating: false,
     projectForm: {
       isLoading: false,
       fetchStatus: 'default',
-      ownerAndRepo: '',
+      repositoryId: '',
       title: '',
       description: '',
       owner: {
@@ -75,11 +78,59 @@ export default {
     }
   }),
   methods: {
+    async deleteProject() {
+      try {
+        const mutationResult = await this.$apollo.mutate({
+          mutation: deleteContribution,
+          variables: {
+            id: this.targetId
+          }
+        })
+        await this.$toast.open({
+          message: 'Project has been deleted!',
+          type: 'is-success',
+          position: 'is-bottom'
+        })
+        return mutationResult
+      } catch (error) {
+        this.$toast.open({
+          message: error,
+          type: 'is-danger',
+          position: 'is-bottom'
+        })
+      }
+    },
+    async createProject() {
+      try {
+        const { title, description, repositoryId } = this.projectForm
+
+        const mutationResult = await this.$apollo.mutate({
+          mutation: createContribution,
+          variables: {
+            title: title,
+            description: description,
+            repositoryId: repositoryId
+          }
+        })
+        await this.$toast.open({
+          message: 'Project created!',
+          type: 'is-success',
+          position: 'is-bottom'
+        })
+        return mutationResult
+      } catch (error) {
+        this.$toast.open({
+          message: error,
+          type: 'is-danger',
+          position: 'is-bottom'
+        })
+      }
+    },
     resetProjectForm() {
       this.projectForm = {
         isLoading: false,
         fetchStatus: 'default',
-        ownerAndRepo: '',
+        repositoryId: '',
         title: '',
         description: '',
         owner: { name: '', avatar: '' }
@@ -93,14 +144,15 @@ export default {
       const string = s.replace('-', ' ')
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
-    setNotification({ type }) {
+    setNotification({ type, targetId }) {
       this.currentNotification = notificationMessages[type]
+      this.targetId = targetId
     },
     confirmNotification() {
       switch (this.currentNotification.name) {
         case 'deleteProject':
           // todo: bind to delete mutation/api call
-          alert('Not yet implemented')
+          this.deleteProject()
           break
         case 'cancelCreating':
         case 'cancelEditing':
@@ -111,14 +163,11 @@ export default {
     closeNotification() {
       this.currentNotification = null
     },
-    deleteProject() {
-      alert('project has been deleted')
-    },
     async fetchProject() {
       try {
         this.projectForm.isLoading = true
         const response = await fetch(
-          `https://api.github.com/repos/${this.projectForm.ownerAndRepo}`
+          `https://api.github.com/repos/${this.projectForm.repositoryId}`
         )
         const project = await response.json()
         this.projectForm.isLoading = false

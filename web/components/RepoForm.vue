@@ -7,7 +7,7 @@
       :type="fieldType"
     >
       <b-input
-        v-model="projectForm.ownerAndRepo"
+        v-model="projectForm.repositoryId"
         icon="github-circle"
         placeholder="owner/repo"
         :disabled="fetchStatus === 'success'"
@@ -87,7 +87,7 @@ export default {
     submitAction() {
       if (this.fetchStatus === 'success') {
         // todo: save to DB
-        alert('save to db')
+        this.$emit('createProject', this.projectForm)
       } else {
         this.$emit('fetchProject')
       }

@@ -9,6 +9,11 @@
             class="loader"
           />
         </div>
+        <h1 v-if="!allContributions.length" class="subtitle">
+          <b-icon icon="emoticon-sad" />
+          &nbsp; No available projects, check with us at a later time or
+          <a href="https://frontmen.nl">contact us</a>
+        </h1>
         <div class="columns is-multiline">
           <div
             v-for="(project, i) in allContributions"
@@ -16,6 +21,7 @@
             class="column is-6"
           >
             <ProjectCard
+              v-if="project.repository"
               :title="project.title"
               :description="project.description"
               :owner-name="project.repository.owner.login"
