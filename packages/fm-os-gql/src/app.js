@@ -27,6 +27,10 @@ const localSchema = makeExecutableSchema({
       async updateContribution(_, { input }) {
         const { id, newData } = input
         return api.updateContribution(id, newData)
+      },
+      async deleteContribution(_, { input }) {
+        const { id } = input
+        return api.deleteContribution(id)
       }
     }
   }

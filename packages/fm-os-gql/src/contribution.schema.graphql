@@ -5,7 +5,15 @@ type Contribution {
   id: ID!
 }
 
+type deletedContribution {
+  id: ID!
+}
+
 input getContributionInput {
+  id: ID!
+}
+
+input deleteContributionInput {
   id: ID!
 }
 
@@ -28,4 +36,5 @@ type Query {
 type Mutation {
   addContribution(input: addContributionInput): Contribution
   updateContribution(input: updateContributionInput): Contribution
+  deleteContribution(input: deleteContributionInput): deletedContribution
 }

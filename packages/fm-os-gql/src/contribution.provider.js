@@ -53,4 +53,18 @@ export class ContributionAPI {
       throw new ApolloError(error)
     }
   }
+
+  async deleteContribution(id) {
+    try {
+      const ref = this.db.collection(this.collection).doc(`${id}`)
+      await ref.delete()
+      const doc = await ref.get()
+      if (doc.exists) {
+        throw new Error('Contribution could not be deleted from database')
+      }
+      return { id }
+    } catch (error) {
+      throw new ApolloError(error)
+    }
+  }
 }
