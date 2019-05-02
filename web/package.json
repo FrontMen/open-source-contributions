@@ -17,22 +17,16 @@
   },
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.0-rc4",
-    "apollo-cache-inmemory": "^1.5.1",
-    "apollo-client": "^2.5.1",
-    "apollo-link": "^1.2.11",
-    "apollo-link-http": "^1.5.14",
     "cross-env": "^5.2.0",
-    "fetch": "^1.1.0",
-    "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
     "node-sass": "^4.11.0",
     "nuxt": "^2.4.0",
     "nuxt-buefy": "^0.3.2",
     "sass-loader": "^7.1.0",
-    "vue": "^2.6.6",
+    "vue": "2.6.10",
     "vue-apollo": "^3.0.0-beta.28",
     "vue-server-renderer": "^2.6.6",
-    "vue-template-compiler": "^2.6.6"
+    "vue-template-compiler": "2.6.10"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^0.0.1",
