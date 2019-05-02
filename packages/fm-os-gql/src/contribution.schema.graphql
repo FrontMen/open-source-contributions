@@ -34,7 +34,7 @@ type Query {
 }
 
 type Mutation {
-  addContribution(input: addContributionInput): Contribution
-  updateContribution(input: updateContributionInput): Contribution
-  deleteContribution(input: deleteContributionInput): deletedContribution
+  addContribution(input: addContributionInput!): Contribution
+  updateContribution(input: updateContributionInput!): Contribution
+  deleteContribution(input: deleteContributionInput!): deletedContribution
 }

@@ -57,10 +57,16 @@ export class ContributionAPI {
   async deleteContribution(id) {
     try {
       const ref = this.db.collection(this.collection).doc(`${id}`)
+      const currentDoc = await ref.get()
+      if (!currentDoc.exists) {
+        throw new Error(`Contribution by id ${id} does not exist.`)
+      }
       await ref.delete()
-      const doc = await ref.get()
-      if (doc.exists) {
-        throw new Error('Contribution could not be deleted from database')
+      const deletedDoc = await ref.get()
+      if (deletedDoc.exists) {
+        throw new Error(
+          `Contribution by id ${id} could not be deleted from database.`
+        )
       }
       return { id }
     } catch (error) {
