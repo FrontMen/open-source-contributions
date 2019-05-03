@@ -15,6 +15,30 @@ export const createContribution = gql`
     }
   }
 `
+
+export const updateContribution = gql`
+  mutation(
+    $title: String!
+    $description: String!
+    $repositoryId: String!
+    $id: ID!
+  ) {
+    updateContribution(
+      input: {
+        id: $id
+        newData: {
+          title: $title
+          description: $description
+          repositoryId: $repositoryId
+        }
+      }
+    ) {
+      id
+      title
+      description
+    }
+  }
+`
 export const deleteContribution = gql`
   mutation($id: ID!) {
     deleteContribution(input: { id: $id }) {

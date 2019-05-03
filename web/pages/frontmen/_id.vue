@@ -1,7 +1,9 @@
 <template>
   <div>
     <Header />
-    <CreateRepoForm
+    {{ this.$route.params }}
+    {{ contribution }}
+    <EditRepoForm
       v-if="isCreating"
       :project-form="projectForm"
       :fetch-status="projectForm.fetchStatus"
@@ -12,25 +14,7 @@
       @updateProject="updateProject"
       @setNotification="setNotification"
     />
-    <Section>
-      <b-button
-        v-if="!isCreating"
-        icon-left="plus"
-        class="is-info is-radiusless add-button"
-        @click="toggleCreate"
-      >
-        ADD REPOSITORY
-      </b-button>
-      <Table
-        v-show="!isCreating"
-        :data="allContributions"
-        :is-loading="this.$apollo.queries.allContributions.loading"
-        @setNotification="setNotification"
-      />
-    </Section>
-    <Footer
-      v-if="!this.$apollo.queries.allContributions.loading && !isCreating"
-    />
+    <Footer />
     <Notification
       v-if="currentNotification"
       :is-open="currentNotification !== null"
@@ -43,25 +27,28 @@
 
 <script>
 import { inputMessages, notificationMessages } from '@/constants/messages.js'
-import getContributions from '@/apollo/queries/getContributions'
-import {
-  createContribution,
-  deleteContribution
-} from '@/apollo/mutations/mutations.js'
+import { updateContribution } from '@/apollo/mutations/mutations.js'
+import gql from 'graphql-tag'
 
 export default {
   name: 'AdminOverview',
   components: {
     Header: () => import('@/components/Header'),
     Footer: () => import('@/components/Footer'),
-    Table: () => import('@/components/Table'),
-    Section: () => import('@/components/Section'),
-    CreateRepoForm: () => import('@/components/CreateRepoForm'),
+    EditRepoForm: () => import('@/components/EditRepoForm'),
     Notification: () => import('@/components/Notification')
   },
   apollo: {
-    allContributions: {
-      query: getContributions
+    contribution: {
+      // todo: fixme
+      query: gql`
+        query getContribution($id: ID!) {
+          getContribution(input: { id: $id })
+        }
+      `,
+      variables: {
+        id: 'GHpHDahx3ByzF8QkOZe2'
+      }
     }
   },
   data: () => ({
@@ -82,42 +69,21 @@ export default {
     }
   }),
   methods: {
-    async deleteProject() {
+    async updateProject() {
       try {
-        const mutationResult = await this.$apollo.mutate({
-          mutation: deleteContribution,
-          variables: {
-            id: this.targetId
-          }
-        })
-        await this.$toast.open({
-          message: 'Project has been deleted!',
-          type: 'is-success',
-          position: 'is-bottom'
-        })
-        return mutationResult
-      } catch (error) {
-        this.$toast.open({
-          message: error,
-          type: 'is-danger',
-          position: 'is-bottom'
-        })
-      }
-    },
-    async createProject() {
-      try {
-        const { title, description, repositoryId } = this.projectForm
+        const { title, description, repositoryId, id } = this.projectForm
 
         const mutationResult = await this.$apollo.mutate({
-          mutation: createContribution,
+          mutation: updateContribution,
           variables: {
+            id: id,
             title: title,
             description: description,
             repositoryId: repositoryId
           }
         })
         await this.$toast.open({
-          message: 'Project created!',
+          message: 'Project updated!',
           type: 'is-success',
           position: 'is-bottom'
         })
@@ -128,16 +94,6 @@ export default {
           type: 'is-danger',
           position: 'is-bottom'
         })
-      }
-    },
-    resetProjectForm() {
-      this.projectForm = {
-        isLoading: false,
-        fetchStatus: 'default',
-        repositoryId: '',
-        title: '',
-        description: '',
-        owner: { name: '', avatar: '' }
       }
     },
     toggleCreate() {

@@ -43,7 +43,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ProjectCard from '@/components/ProjectCard'
-import getContributions from '@/queries/getContributions'
+import getContributions from '@/apollo/queries/getContributions'
 
 export default {
   name: 'Overview',
