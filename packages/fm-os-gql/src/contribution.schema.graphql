@@ -23,13 +23,15 @@ input addContributionInput {
   repositoryId: String!
 }
 
+input updateContributionDataInput {
+  title: String
+  description: String
+  repositoryId: String
+}
+
 input updateContributionInput {
   id: ID!
-  newData: {
-    title: String
-    description: String
-    repositoryId: String
-  }
+  newData: updateContributionDataInput!
 }
 
 type Query {
