@@ -1,6 +1,7 @@
 import { ApolloError } from 'apollo-server'
 import admin from './firebase'
 
+// TODO refactor reused logic into helper functions
 export class ContributionAPI {
   constructor() {
     this.collection = 'contributions'
