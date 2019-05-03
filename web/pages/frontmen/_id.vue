@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header />
-    {{ this.$route.params }}
+    <!-- todo: fix form for eding -->
     {{ contribution }}
     <EditRepoForm
       v-if="isCreating"
@@ -43,11 +43,19 @@ export default {
       // todo: fixme
       query: gql`
         query getContribution($id: ID!) {
-          getContribution(input: { id: $id })
+          contribution: getContribution(input: { id: $id }) {
+            id
+            title
+            description
+            repositoryId
+          }
         }
       `,
-      variables: {
-        id: 'GHpHDahx3ByzF8QkOZe2'
+      variables() {
+        // fixme
+        return {
+          id: this.routeParams.id
+        }
       }
     }
   },
@@ -68,6 +76,11 @@ export default {
       }
     }
   }),
+  computed: {
+    routeParams() {
+      return this.$route.params
+    }
+  },
   methods: {
     async updateProject() {
       try {
@@ -111,7 +124,6 @@ export default {
     confirmNotification() {
       switch (this.currentNotification.name) {
         case 'deleteProject':
-          // todo: bind to delete mutation/api call
           this.deleteProject()
           break
         case 'cancelCreating':
