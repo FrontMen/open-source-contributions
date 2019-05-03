@@ -4,20 +4,38 @@
     <section class="section">
       <div class="container">
         <div class="center">
-          <div v-if="loading" class="loader" />
+          <div
+            v-if="this.$apollo.queries.allContributions.loading"
+            class="loader"
+          />
         </div>
-        <div>
-          Hier komt het resultaat
-          {{ allContributions }}
-        </div>
+        <h1 v-if="!allContributions.length" class="subtitle">
+          <b-icon icon="emoticon-sad" />
+          &nbsp; No available projects, check with us at a later time or
+          <a href="https://frontmen.nl">contact us</a>
+        </h1>
         <div class="columns is-multiline">
-          <div v-for="(project, i) in projects" :key="i" class="column is-6">
-            <ProjectCard :project="project" />
+          <div
+            v-for="(project, i) in allContributions"
+            :key="i"
+            class="column is-6"
+          >
+            <ProjectCard
+              v-if="project.repository"
+              :title="project.title"
+              :description="project.description"
+              :owner-name="project.repository.owner.login"
+              :owner-avatar="project.repository.owner.avatarUrl"
+              :url="project.repository.url"
+              :star-count="project.repository.stargazers.totalCount"
+              :fork-count="project.repository.forks.totalCount"
+              :created-at="project.repository.createdAt"
+            />
           </div>
         </div>
       </div>
     </section>
-    <Footer v-if="!loading" />
+    <Footer v-if="!this.$apollo.queries.allContributions.loading" />
   </div>
 </template>
 
@@ -25,7 +43,7 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ProjectCard from '@/components/ProjectCard'
-import getContributions from '@/queries/getContributions'
+import getContributions from '@/apollo/queries/getContributions'
 
 export default {
   name: 'Overview',
@@ -37,28 +55,6 @@ export default {
   apollo: {
     allContributions: {
       query: getContributions
-    }
-  },
-  data: () => ({
-    projects: [],
-    loading: true
-  }),
-  async mounted() {
-    await this.fetchProjects()
-  },
-  methods: {
-    async fetchProjects() {
-      try {
-        const response = await fetch(
-          'https://api.github.com/orgs/frontmen/repos'
-        )
-        const projects = await response.json()
-        this.projects = projects
-        this.loading = false
-        return projects
-      } catch (err) {
-        throw err
-      }
     }
   }
 }

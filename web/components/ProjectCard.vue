@@ -1,33 +1,29 @@
 <template>
   <article class="box is-radiusless	">
-    <img
-      v-show="project.owner.avatar_url.length"
-      :src="project.owner.avatar_url"
-      class="avatar"
-    />
-    <p class="title is-family-secondary	">{{ project.name }}</p>
-    <p class="subtitle">{{ project.description }}</p>
+    <img v-show="ownerAvatar.length" :src="ownerAvatar" class="avatar" />
+    <p class="title is-family-secondary">{{ title }}</p>
+    <p class="subtitle">{{ description }}</p>
     <div class="columns is-mobile is-gapless">
       <div class="column is-8">
         <span class="icon-info-wrapper">
           <b-icon icon="star" />
           <span class="icon-info-count">
-            {{ project.stargazers_count }}
+            {{ starCount }}
           </span>
         </span>
         &nbsp;
         <span class="icon-info-wrapper">
           <b-icon icon="source-fork" />
           <span class="icon-info-count">
-            {{ project.forks_count }}
+            {{ forkCount }}
           </span>
         </span>
       </div>
       <div class="column is-4 align-right">
-        <a :href="project.html_url">
+        <a :href="url" target="_blank">
           <b-button
             icon-left="github-circle"
-            class="is-warning is-family-secondary is-radiusless	"
+            class="is-warning is-family-secondary is-radiusless"
           >
             SOURCE
           </b-button>
@@ -41,9 +37,29 @@
 export default {
   name: 'ProjectCard',
   props: {
-    project: {
-      type: Object,
-      required: true
+    ownerAvatar: {
+      type: String,
+      default: '@/static/chillicorn.png'
+    },
+    title: {
+      type: String,
+      default: 'Title'
+    },
+    description: {
+      type: String,
+      default: 'Description'
+    },
+    starCount: {
+      type: Number,
+      default: 0
+    },
+    forkCount: {
+      type: Number,
+      default: 0
+    },
+    url: {
+      type: String,
+      default: ''
     }
   }
 }
