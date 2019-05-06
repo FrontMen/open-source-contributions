@@ -17,8 +17,10 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/apollo": "^4.0.0-rc4",
+    "@nuxtjs/apollo": "4.0.0-rc4",
     "cross-env": "^5.2.0",
+    "firebase": "^5.11.0",
+    "firebaseui": "^3.6.0",
     "graphql-tag": "^2.10.1",
     "node-sass": "^4.11.0",
     "nuxt": "^2.4.0",
@@ -26,6 +28,8 @@
     "sass-loader": "^7.1.0",
     "vue": "2.6.10",
     "vue-apollo": "^3.0.0-beta.28",
+    "vue-cli-plugin-apollo": "^0.20.0",
+    "vue-google-login": "^2.0.0",
     "vue-server-renderer": "^2.6.6",
     "vue-template-compiler": "2.6.10"
   },
@@ -44,6 +48,7 @@
     "eslint-plugin-promise": ">=4.0.1",
     "eslint-plugin-standard": ">=4.0.0",
     "eslint-plugin-vue": "^5.2.2",
+    "fs": "0.0.1-security",
     "nodemon": "^1.18.9",
     "prettier": "^1.16.4"
   }

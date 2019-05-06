@@ -1,0 +1,8 @@
+{
+  user: getUser {
+    name @client
+    email @client
+    token @client
+    isLoggedIn @client
+  }
+}

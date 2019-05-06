@@ -1,7 +1,8 @@
-import pkg from './package'
-
 export default {
   mode: 'universal',
+  // router: {
+  //   middleware: 'auth'
+  // },
 
   /*
    ** Headers of the page
@@ -64,7 +65,8 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: 'https://secret-badlands-67018.herokuapp.com/'
-      }
+      },
+      local: '@/plugins/localClient.js'
     }
   },
 

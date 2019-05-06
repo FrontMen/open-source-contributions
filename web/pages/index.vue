@@ -3,6 +3,7 @@
     <Header />
     <section class="section">
       <div class="container">
+        <p>show me the user: {{ user }}</p>
         <div class="center">
           <div
             v-if="this.$apollo.queries.allContributions.loading"
@@ -44,6 +45,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ProjectCard from '@/components/ProjectCard'
 import getContributions from '@/apollo/queries/getContributions'
+import getUser from '@/apollo/queries/getUser'
 
 export default {
   name: 'Overview',
@@ -55,6 +57,9 @@ export default {
   apollo: {
     allContributions: {
       query: getContributions
+    },
+    user: {
+      query: getUser
     }
   }
 }
