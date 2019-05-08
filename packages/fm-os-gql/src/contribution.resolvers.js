@@ -1,4 +1,6 @@
 import { ContributionAPI } from './contribution.provider'
+import { AuthenticationAPI } from './authentication.provider'
+const auth = new AuthenticationAPI()
 const api = new ContributionAPI()
 
 export const contributionResolvers = {
@@ -9,6 +11,9 @@ export const contributionResolvers = {
     async getContribution(_, { input }) {
       const { id } = input
       return api.getContribution(id)
+    },
+    getToken() {
+      return 'test'
     }
   },
   Mutation: {
@@ -22,6 +27,11 @@ export const contributionResolvers = {
     async deleteContribution(_, { input }) {
       const { id } = input
       return api.deleteContribution(id)
+    },
+    // TODO seperate into different modules
+    async verifyToken(_, { input }) {
+      const { token } = input
+      return auth.verifyToken(token)
     }
   }
 }

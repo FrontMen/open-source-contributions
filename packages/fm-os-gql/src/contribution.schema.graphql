@@ -34,13 +34,19 @@ input updateContributionInput {
   newData: updateContributionDataInput!
 }
 
+input verifyTokenInput {
+  token: String!
+}
+
 type Query {
   getContributions: [Contribution]
   getContribution(input: getContributionInput): Contribution
+  getToken: String
 }
 
 type Mutation {
   addContribution(input: addContributionInput!): Contribution
   updateContribution(input: updateContributionInput!): Contribution
   deleteContribution(input: deleteContributionInput!): deletedContribution
+  verifyToken(input: verifyTokenInput): Boolean!
 }

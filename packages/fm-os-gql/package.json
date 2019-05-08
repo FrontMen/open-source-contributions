@@ -19,6 +19,7 @@
     "apollo-server": "^2.3.3",
     "dotenv": "^7.0.0",
     "firebase-admin": "^7.3.0",
+    "google-auth-library": "^3.1.2",
     "graphql": "^14.1.1",
     "graphql-import": "^0.7.1",
     "graphql-tag": "^2.10.1",

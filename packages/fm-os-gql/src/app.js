@@ -2,14 +2,15 @@ import { makeExecutableSchema } from 'apollo-server'
 import gql from 'graphql-tag'
 import { mergeSchemas } from 'graphql-tools'
 import { importSchema } from 'graphql-import'
+import merge from 'lodash.merge'
 import { createGithubSchema, createGithubResolvers } from './github'
 import { contributionResolvers } from './contribution.resolvers'
 
-const schema = importSchema(`./src/contribution.schema.graphql`)
+const contributionSchema = importSchema(`./src/contribution.schema.graphql`)
 
 const localSchema = makeExecutableSchema({
-  typeDefs: [schema],
-  resolvers: contributionResolvers
+  typeDefs: [contributionSchema],
+  resolvers: merge({}, contributionResolvers)
 })
 
 const createSchema = async () => {
