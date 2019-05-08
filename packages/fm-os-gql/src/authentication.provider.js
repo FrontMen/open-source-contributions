@@ -18,7 +18,7 @@ export class AuthenticationAPI {
       })
 
       const { hd } = ticket.getPayload()
-      if (hd && hd !== 'frontmen.nl') {
+      if (hd !== 'frontmen.nl') {
         return false
       }
       return true
