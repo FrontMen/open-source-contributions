@@ -2,6 +2,9 @@ import pkg from './package'
 
 export default {
   mode: 'universal',
+  // router: {
+  //   middleware: 'auth'
+  // },
 
   /*
    ** Headers of the page
@@ -51,7 +54,7 @@ export default {
   ],
 
   apollo: {
-    tokenName: 'fmApolloRocks', // optional, default: apollo-token
+    tokenName: 'FM_OS_APOLLO_USER_TOKEN',
     tokenExpires: 10, // optional, default: 7 (days)
     errorHandler(error) {
       // eslint-disable-next-line no-console

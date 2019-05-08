@@ -46,3 +46,9 @@ export const deleteContribution = gql`
     }
   }
 `
+
+export const verifyToken = gql`
+  mutation($idToken: String!) {
+    verifyToken(input: { token: $idToken })
+  }
+`
