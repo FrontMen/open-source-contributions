@@ -181,7 +181,7 @@ export default {
     },
     async onFailure() {
       await this.$apolloHelpers.onLogout()
-      this.handleError('You have been logged out.')
+      this.handleError('We could not log you in, please try again.')
     }
   }
 }
