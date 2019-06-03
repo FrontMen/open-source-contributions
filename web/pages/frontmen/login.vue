@@ -130,6 +130,7 @@ export default {
     Footer: () => import('@/components/Footer'),
     Section: () => import('@/components/Section')
   },
+  middleware: ['checkSession'],
   data() {
     return {
       isAuthenticated: false,
@@ -137,12 +138,12 @@ export default {
       error: null,
       params: {
         client_id:
-          '878769613885-27apk96jh71lo63f8c3o8i1m71mgc94f.apps.googleusercontent.com'
+          '878769613885-d9dsqu2c7k7346d5o12bfp085jpp2vvv.apps.googleusercontent.com'
       }
     }
   },
   mounted() {
-    this.isAuthenticated = !!this.$apolloHelpers.getToken()
+    this.isAuthenticated = this.$apolloHelpers.getToken()
     this.isAuthenticated && this.handleRedirect()
   },
   methods: {
@@ -152,23 +153,25 @@ export default {
     handleError(error) {
       this.error = error
     },
-    async onSuccess(googleUser) {
-      const idToken = googleUser.getAuthResponse().id_token
-
+    async checkTokenValidity(token) {
       const isTokenValid = await this.$apollo
         .mutate({
           mutation: verifyToken,
           variables: {
-            idToken
+            idToken: token
           }
         })
         .then(({ data }) => {
           return data.verifyToken
         })
         .catch(error => {
-          this.handleError(error)
-          return false
+          throw new Error(error)
         })
+      return isTokenValid
+    },
+    async onSuccess(googleUser) {
+      const idToken = googleUser.getAuthResponse().id_token
+      const isTokenValid = await this.checkTokenValidity(idToken)
 
       if (isTokenValid) {
         await this.$apolloHelpers.onLogin(idToken)
@@ -181,7 +184,7 @@ export default {
     },
     async onFailure() {
       await this.$apolloHelpers.onLogout()
-      this.handleError('You have been logged out.')
+      this.handleError('We could not log you in, please try again.')
     }
   }
 }

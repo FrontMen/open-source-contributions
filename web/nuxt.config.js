@@ -2,9 +2,6 @@ import pkg from './package'
 
 export default {
   mode: 'universal',
-  // router: {
-  //   middleware: 'auth'
-  // },
 
   /*
    ** Headers of the page
@@ -50,7 +47,8 @@ export default {
   modules: [
     // Doc: https://buefy.github.io/#/documentation
     'nuxt-buefy',
-    '@nuxtjs/apollo'
+    '@nuxtjs/apollo',
+    'cookie-universal-nuxt'
   ],
 
   apollo: {
