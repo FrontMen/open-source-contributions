@@ -138,7 +138,7 @@ export default {
       error: null,
       params: {
         client_id:
-          '878769613885-27apk96jh71lo63f8c3o8i1m71mgc94f.apps.googleusercontent.com'
+          '878769613885-d9dsqu2c7k7346d5o12bfp085jpp2vvv.apps.googleusercontent.com'
       }
     }
   },
