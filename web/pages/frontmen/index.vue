@@ -59,7 +59,7 @@ export default {
     CreateRepoForm: () => import('@/components/CreateRepoForm'),
     Notification: () => import('@/components/Notification')
   },
-  middleware: ['checkAuthorization'],
+  middleware: ['checkSession', 'checkAuthorization'],
   apollo: {
     allContributions: {
       query: getContributions

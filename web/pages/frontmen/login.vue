@@ -130,6 +130,7 @@ export default {
     Footer: () => import('@/components/Footer'),
     Section: () => import('@/components/Section')
   },
+  middleware: ['checkSession'],
   data() {
     return {
       isAuthenticated: false,
@@ -142,7 +143,7 @@ export default {
     }
   },
   mounted() {
-    this.isAuthenticated = !!this.$apolloHelpers.getToken()
+    this.isAuthenticated = this.$apolloHelpers.getToken()
     this.isAuthenticated && this.handleRedirect()
   },
   methods: {
@@ -152,23 +153,25 @@ export default {
     handleError(error) {
       this.error = error
     },
-    async onSuccess(googleUser) {
-      const idToken = googleUser.getAuthResponse().id_token
-
+    async checkTokenValidity(token) {
       const isTokenValid = await this.$apollo
         .mutate({
           mutation: verifyToken,
           variables: {
-            idToken
+            idToken: token
           }
         })
         .then(({ data }) => {
           return data.verifyToken
         })
         .catch(error => {
-          this.handleError(error)
-          return false
+          throw new Error(error)
         })
+      return isTokenValid
+    },
+    async onSuccess(googleUser) {
+      const idToken = googleUser.getAuthResponse().id_token
+      const isTokenValid = await this.checkTokenValidity(idToken)
 
       if (isTokenValid) {
         await this.$apolloHelpers.onLogin(idToken)
