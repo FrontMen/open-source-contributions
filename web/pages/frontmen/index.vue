@@ -89,6 +89,23 @@ export default {
           mutation: deleteContribution,
           variables: {
             id: this.targetId
+          },
+          update: (store, { data: { deleteContribution } }) => {
+            const data = store.readQuery({ query: getContributions })
+            const updatedData = {
+              ...data,
+              allContributions: data.allContributions.filter(
+                c => c.id !== deleteContribution.id
+              )
+            }
+            store.writeQuery({ query: getContributions, data: updatedData })
+          },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            deleteContribution: {
+              id: this.targetId,
+              __typename: 'deletedContribution'
+            }
           }
         })
         await this.$toast.open({
