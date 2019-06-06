@@ -126,20 +126,24 @@ export default {
       try {
         const { title, description, repositoryId } = this.projectForm
 
-        const mutationResult = await this.$apollo.mutate({
+        await this.$apollo.mutate({
           mutation: createContribution,
           variables: {
             title: title,
             description: description,
             repositoryId: repositoryId
-          }
+          },
+          refetchQueries: [{ query: getContributions }],
+          awaitRefetchQueries: true
         })
+
         await this.$toast.open({
           message: 'Project created!',
           type: 'is-success',
           position: 'is-bottom'
         })
-        return mutationResult
+
+        this.toggleCreate()
       } catch (error) {
         this.$toast.open({
           message: error,
