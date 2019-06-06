@@ -9,7 +9,6 @@
       @toggleCreate="toggleCreate"
       @fetchProject="fetchProject"
       @createProject="createProject"
-      @updateProject="updateProject"
       @setNotification="setNotification"
     />
     <Section>
@@ -26,6 +25,7 @@
         :data="allContributions"
         :is-loading="this.$apollo.queries.allContributions.loading"
         @setNotification="setNotification"
+        @updateProject="updateProject"
       />
     </Section>
     <Footer
@@ -43,7 +43,7 @@
 
 <script>
 import { inputMessages, notificationMessages } from '@/constants/messages.js'
-import getContributions from '@/apollo/queries/getContributions'
+import getContributions from '@/apollo/queries/getContributions.js'
 import {
   createContribution,
   deleteContribution
@@ -148,6 +148,10 @@ export default {
         })
       }
     },
+
+    updateProject(id) {
+      this.$router.push({ path: `/frontmen/${id}` })
+    },
     resetProjectForm() {
       this.projectForm = {
         isLoading: false,
@@ -186,6 +190,7 @@ export default {
       this.currentNotification = null
     },
     async fetchProject() {
+      // @TODO replace with apollo query
       try {
         this.projectForm.isLoading = true
         const response = await fetch(

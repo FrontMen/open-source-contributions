@@ -54,14 +54,6 @@ export default {
   apollo: {
     tokenName: 'FM_OS_APOLLO_USER_TOKEN',
     tokenExpires: 10, // optional, default: 7 (days)
-    errorHandler(error) {
-      // eslint-disable-next-line no-console
-      console.log(
-        '%cError',
-        'background: renvmd; color: white; padding: 2px 4px; border-radius: 3px; font-weight: bold;',
-        error.message
-      )
-    },
     clientConfigs: {
       default: {
         httpEndpoint: 'https://secret-badlands-67018.herokuapp.com/'
@@ -85,6 +77,8 @@ export default {
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
+
+        config.devtool = 'cheap-module-eval-source-map'
       }
     }
   }

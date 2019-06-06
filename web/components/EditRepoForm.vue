@@ -1,4 +1,5 @@
 <template>
+  <!-- this seems to be a copy of createRepoForm, refactor into reusable elements -->
   <Section>
     <h1 class="title">Edit the contribution</h1>
     <b-field
@@ -30,7 +31,7 @@
     <b-button
       icon-left="cancel"
       class="is-radiusless is-family-secondary cancel-button"
-      @click="$emit('setNotification', { type: 'cancelCreating' })"
+      @click="$emit('setNotification', { type: 'cancelEditing' })"
     >
       CANCEL
     </b-button>
@@ -86,7 +87,7 @@ export default {
       if (this.fetchStatus === 'success') {
         this.$emit('updateProject')
       } else {
-        this.$emit('fetchProject')
+        this.$emit('fetchProject', this.projectForm.repositoryId)
       }
     }
   }
