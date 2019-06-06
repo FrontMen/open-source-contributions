@@ -9,7 +9,6 @@
       @toggleCreate="toggleCreate"
       @fetchProject="fetchProject"
       @createProject="createProject"
-      @updateProject="updateProject"
       @setNotification="setNotification"
     />
     <Section>
@@ -26,6 +25,7 @@
         :data="allContributions"
         :is-loading="this.$apollo.queries.allContributions.loading"
         @setNotification="setNotification"
+        @updateProject="updateProject"
       />
     </Section>
     <Footer
@@ -43,7 +43,7 @@
 
 <script>
 import { inputMessages, notificationMessages } from '@/constants/messages.js'
-import getContributions from '@/apollo/queries/getContributions'
+import getContributions from '@/apollo/queries/getContributions.js'
 import {
   createContribution,
   deleteContribution
@@ -126,20 +126,24 @@ export default {
       try {
         const { title, description, repositoryId } = this.projectForm
 
-        const mutationResult = await this.$apollo.mutate({
+        await this.$apollo.mutate({
           mutation: createContribution,
           variables: {
             title: title,
             description: description,
             repositoryId: repositoryId
-          }
+          },
+          refetchQueries: [{ query: getContributions }],
+          awaitRefetchQueries: true
         })
+
         await this.$toast.open({
           message: 'Project created!',
           type: 'is-success',
           position: 'is-bottom'
         })
-        return mutationResult
+
+        this.toggleCreate()
       } catch (error) {
         this.$toast.open({
           message: error,
@@ -147,6 +151,10 @@ export default {
           position: 'is-bottom'
         })
       }
+    },
+
+    updateProject(id) {
+      this.$router.push({ path: `/frontmen/${id}` })
     },
     resetProjectForm() {
       this.projectForm = {
@@ -186,6 +194,7 @@ export default {
       this.currentNotification = null
     },
     async fetchProject() {
+      // @TODO replace with apollo query
       try {
         this.projectForm.isLoading = true
         const response = await fetch(

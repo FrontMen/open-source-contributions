@@ -1,16 +1,13 @@
 <template>
   <div>
     <Header />
-    <!-- todo: fix form for eding -->
-    {{ contribution }}
     <EditRepoForm
       v-if="isCreating"
       :project-form="projectForm"
       :fetch-status="projectForm.fetchStatus"
       :input-messages="inputMessages"
       @toggleCreate="toggleCreate"
-      @fetchProject="fetchProject"
-      @createProject="createProject"
+      @fetchProject="fetchRepository"
       @updateProject="updateProject"
       @setNotification="setNotification"
     />
@@ -28,7 +25,7 @@
 <script>
 import { inputMessages, notificationMessages } from '@/constants/messages.js'
 import { updateContribution } from '@/apollo/mutations/mutations.js'
-import gql from 'graphql-tag'
+import getContribution from '@/apollo/queries/getContribution.js'
 
 export default {
   name: 'AdminOverview',
@@ -38,48 +35,25 @@ export default {
     EditRepoForm: () => import('@/components/EditRepoForm'),
     Notification: () => import('@/components/Notification')
   },
-  apollo: {
-    contribution: {
-      // todo: fixme
-      query: gql`
-        query getContribution($id: ID!) {
-          contribution: getContribution(input: { id: $id }) {
-            id
-            title
-            description
-            repositoryId
-          }
-        }
-      `,
-      variables() {
-        // fixme
-        return {
-          id: this.routeParams.id
-        }
-      }
-    }
-  },
   data: () => ({
     currentNotification: null,
-    targetId: null,
     inputMessages: inputMessages,
-    isCreating: false,
+    isCreating: true,
     projectForm: {
       isLoading: false,
       fetchStatus: 'default',
       repositoryId: '',
       title: '',
-      description: '',
-      owner: {
-        name: '',
-        avatar: ''
-      }
+      description: ''
     }
   }),
   computed: {
-    routeParams() {
-      return this.$route.params
+    id() {
+      return this.$route.params.id
     }
+  },
+  mounted: function() {
+    this.fetchProject(this.id)
   },
   methods: {
     async updateProject() {
@@ -109,9 +83,38 @@ export default {
         })
       }
     },
+    async fetchProject(id) {
+      try {
+        const { data, loading } = await this.$apollo.query({
+          query: getContribution,
+          variables: { id },
+          errorPolicy: 'all'
+        })
+
+        if (loading) {
+          this.projectForm.isLoading = true
+        }
+
+        if (data) {
+          // if when can get an id back, github repository still exists
+          const fetchStatus =
+            data.contribution.repository && data.contribution.repository.id
+              ? 'success'
+              : 'failed'
+          this.projectForm = {
+            ...this.projectForm,
+            ...data.contribution,
+            fetchStatus,
+            isLoading: false
+          }
+        }
+      } catch (error) {
+        // @TODO handle errors better/in UI
+        console.log(error)
+      }
+    },
     toggleCreate() {
-      this.isCreating = !this.isCreating
-      this.resetProjectForm()
+      this.$router.push('/frontmen')
     },
     replaceHypens(s) {
       const string = s.replace('-', ' ')
@@ -122,6 +125,7 @@ export default {
       this.targetId = targetId
     },
     confirmNotification() {
+      // @TODO refactor into pure function?
       switch (this.currentNotification.name) {
         case 'deleteProject':
           this.deleteProject()
@@ -133,31 +137,24 @@ export default {
       }
     },
     closeNotification() {
+      // @TODO refactor into Apollo client state?
       this.currentNotification = null
     },
-    async fetchProject() {
+    async fetchRepository(id) {
+      // @TODO replace with GQL call
       try {
         this.projectForm.isLoading = true
-        const response = await fetch(
-          `https://api.github.com/repos/${this.projectForm.repositoryId}`
-        )
+        const response = await fetch(`https://api.github.com/repos/${id}`)
         const project = await response.json()
         this.projectForm.isLoading = false
         if (project.message) {
           this.projectForm.fetchStatus = 'failed'
         } else {
-          this.projectForm = {
-            ...this.projectForm,
-            title: this.replaceHypens(project.name),
-            description: project.description,
-            name: project.owner.login,
-            avatar: project.owner.avatar_url,
-            fetchStatus: 'success'
-          }
+          this.projectForm.fetchStatus = 'success'
         }
         return project
       } catch (err) {
-        throw err
+        console.log(err)
       }
     }
   }

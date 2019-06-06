@@ -17,7 +17,7 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
-    "@nuxtjs/apollo": "^4.0.0-rc4",
+    "@nuxtjs/apollo": "4.0.0-rc6",
     "cookie-universal-nuxt": "^2.0.14",
     "cross-env": "^5.2.0",
     "graphql-tag": "^2.10.1",
@@ -26,7 +26,7 @@
     "nuxt-buefy": "^0.3.2",
     "sass-loader": "^7.1.0",
     "vue": "2.6.10",
-    "vue-apollo": "^3.0.0-beta.28",
+    "vue-apollo": "3.0.0-beta.30",
     "vue-google-login": "^2.0.0",
     "vue-server-renderer": "^2.6.6",
     "vue-template-compiler": "2.6.10"

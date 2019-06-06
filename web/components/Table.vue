@@ -37,7 +37,12 @@
         Edit or remove this entry to cleanup the database.
       </b-table-column>
       <b-table-column field="actions" label="Actions">
-        <IconButton type="is-primary" icon="pencil" mobile-text="EDIT" />
+        <IconButton
+          type="is-primary"
+          icon="pencil"
+          mobile-text="EDIT"
+          @click="$emit('updateProject', props.row.id)"
+        />
         <IconButton
           type="is-danger"
           icon="delete"
