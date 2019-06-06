@@ -1,17 +1,24 @@
 <template>
   <div>
     <nav class="navbar is-black" role="navigation" aria-label="main navigation">
-      <div class="navbar-end">
+      <div class="container">
         <div class="navbar-item">
-          <router-link v-if="isAuthenticated" to="/frontmen">Admin</router-link>
+          <router-link to="/">All contributions</router-link>
         </div>
-        <div class="navbar-item">
-          <div v-if="!isAuthenticated" class="buttons">
-            <router-link
-              to="/frontmen/login"
-              class="button is-warning is-family-secondary is-radiusless"
-              >Admin Login</router-link
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <router-link v-if="isAuthenticated" to="/frontmen"
+              >Admin</router-link
             >
+          </div>
+          <div class="navbar-item">
+            <div v-if="!isAuthenticated" class="buttons">
+              <router-link
+                to="/frontmen/login"
+                class="button is-warning is-family-secondary is-radiusless"
+                >Admin Login</router-link
+              >
+            </div>
           </div>
         </div>
       </div>
