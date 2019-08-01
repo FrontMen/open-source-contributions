@@ -1,18 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProjectCard matches the snapshot 1`] = `
-<article class="box is-radiusless	"><img src="@/static/chillicorn.png" class="avatar">
-  <p class="title is-family-secondary">Title</p>
+<article class="box is-radiusless	"><img src="chillicorn.png" class="avatar">
+  <p class="title is-family-secondary">this is a title</p>
   <p class="subtitle">Description</p>
   <div class="columns is-mobile is-gapless">
-    <div class="column is-8"><span class="icon-info-wrapper"><b-icon-stub icon="star"></b-icon-stub> <span class="icon-info-count">
+    <div class="column is-8"><span class="icon-info-wrapper"><b-icon-stub icon="star"></b-icon-stub> <span class="icon-info-count star-count">
           0
         </span></span>
       &nbsp;
-      <span class="icon-info-wrapper"><b-icon-stub icon="source-fork"></b-icon-stub> <span class="icon-info-count">
-          0
+      <span class="icon-info-wrapper"><b-icon-stub icon="source-fork"></b-icon-stub> <span class="icon-info-count fork-count">
+          4
         </span></span></div>
-    <div class="column is-4 align-right"><a href="" target="_blank">
+    <div class="column is-4 align-right"><a href="www.test.com" target="_blank" class="source-link">
         <b-button-stub iconleft="github-circle" nativetype="button" tag="button" class="is-warning is-family-secondary is-radiusless">
           SOURCE
         </b-button-stub>

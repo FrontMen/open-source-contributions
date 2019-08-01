@@ -35,4 +35,9 @@ describe('Header', () => {
   it('matches the snapshot', () => {
     expect(wrapper).toMatchSnapshot()
   })
+
+  it('authentication is set to token after getToken is called', () => {
+    $apolloHelpers.getToken()
+    expect(wrapper.vm.isAuthenticated).toBe('123abc')
+  })
 })
