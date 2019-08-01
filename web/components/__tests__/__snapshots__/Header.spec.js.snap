@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header matches the snapshot 1`] = `
+<div>
+  <nav role="navigation" aria-label="main navigation" class="navbar is-black">
+    <div class="container">
+      <div class="navbar-item">
+        <router-link-stub to="/">All contributions</router-link-stub>
+      </div>
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <router-link-stub to="/frontmen">Admin</router-link-stub>
+        </div>
+        <div class="navbar-item">
+          <!---->
+        </div>
+      </div>
+    </div>
+  </nav>
+  <header class="hero is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns">
+          <div class="column"><img src="@/static/fm-monogram-logo.svg" width="50" class="is-pulled-left" style="margin-right: 2rem;">
+            <h1 class="title is-family-secondary">
+              FrontMen Open Source
+            </h1>
+            <h2 class="subtitle">
+              A list of projects FrontMen contributed to
+            </h2>
+          </div>
+          <div class="column align-right"><img width="84px" src="@/static/chillicorn.png"> <img width="220px" src="@/static/heart-beating.gif"></div>
+        </div>
+        <div class="columns">
+          <div class="column"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;
