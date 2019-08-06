@@ -116,10 +116,6 @@ export default {
     toggleCreate() {
       this.$router.push('/frontmen')
     },
-    replaceHypens(s) {
-      const string = s.replace('-', ' ')
-      return string.charAt(0).toUpperCase() + string.slice(1)
-    },
     setNotification({ type, targetId }) {
       this.currentNotification = notificationMessages[type]
       this.targetId = targetId
