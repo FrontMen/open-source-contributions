@@ -102,6 +102,6 @@ export default {
 }
 
 .tag {
-  width: 6rem;
+  width: 5rem;
 }
 </style>
