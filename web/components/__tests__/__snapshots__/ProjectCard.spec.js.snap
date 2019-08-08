@@ -5,11 +5,11 @@ exports[`ProjectCard matches the snapshot 1`] = `
   <p class="title is-family-secondary">this is a title</p>
   <p class="subtitle">Description</p>
   <div class="columns is-mobile is-gapless">
-    <div class="column is-8"><span class="icon-info-wrapper"><b-icon-stub icon="star"></b-icon-stub> <span class="icon-info-count star-count">
+    <div class="column is-8"><span class="icon-info-wrapper"><b-icon-stub icon="star"></b-icon-stub> <span class="icon-info-count">
           0
         </span></span>
       &nbsp;
-      <span class="icon-info-wrapper"><b-icon-stub icon="source-fork"></b-icon-stub> <span class="icon-info-count fork-count">
+      <span class="icon-info-wrapper"><b-icon-stub icon="source-fork"></b-icon-stub> <span data-testid="fork-count" class="icon-info-count">
           4
         </span></span></div>
     <div class="column is-4 align-right"><a href="www.test.com" target="_blank" class="source-link">

@@ -5,20 +5,18 @@ import ProjectCard from '../ProjectCard'
 let wrapper
 const localVue = createLocalVue()
 localVue.use(Buefy)
-const propOwnerAvatar = 'chillicorn.png'
-const propTitle = 'this is a title'
-const propForkCount = 4
-const propUrl = 'www.test.com'
+
+const mockData = {
+  ownerAvatar: 'chillicorn.png',
+  title: 'this is a title',
+  forkCount: 4,
+  url: 'www.test.com'
+}
 
 describe('ProjectCard', () => {
   beforeEach(() => {
     wrapper = shallowMount(ProjectCard, {
-      propsData: {
-        ownerAvatar: propOwnerAvatar,
-        title: propTitle,
-        forkCount: propForkCount,
-        url: propUrl
-      },
+      propsData: mockData,
       localVue
     })
   })
@@ -35,12 +33,14 @@ describe('ProjectCard', () => {
     expect(wrapper).toMatchSnapshot()
   })
   it('receives props and renders them', () => {
-    expect(wrapper.props('ownerAvatar')).toBe('chillicorn.png')
-    expect(wrapper.find('img.avatar').attributes('src')).toBe('chillicorn.png')
-    expect(wrapper.find('p.title').text()).toBe('this is a title')
-    expect(wrapper.find('span.fork-count').text()).toBe('4')
-    expect(wrapper.find('a.source-link').attributes('href')).toBe(
-      'www.test.com'
+    expect(wrapper.props('ownerAvatar')).toBe(mockData.ownerAvatar)
+    expect(wrapper.find('img.avatar').attributes('src')).toBe(
+      mockData.ownerAvatar
     )
+    expect(wrapper.find('p.title').text()).toBe(mockData.title)
+    expect(wrapper.find('[data-testid="fork-count"]').text()).toBe(
+      mockData.forkCount.toString()
+    )
+    expect(wrapper.find('a.source-link').attributes('href')).toBe(mockData.url)
   })
 })

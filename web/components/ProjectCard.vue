@@ -7,14 +7,14 @@
       <div class="column is-8">
         <span class="icon-info-wrapper">
           <b-icon icon="star" />
-          <span class="icon-info-count star-count">
+          <span class="icon-info-count">
             {{ starCount }}
           </span>
         </span>
         &nbsp;
         <span class="icon-info-wrapper">
           <b-icon icon="source-fork" />
-          <span class="icon-info-count fork-count">
+          <span class="icon-info-count" data-testid="fork-count">
             {{ forkCount }}
           </span>
         </span>
