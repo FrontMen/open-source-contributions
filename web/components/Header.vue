@@ -1,26 +1,18 @@
 <template>
   <div>
-    <nav class="navbar is-black" role="navigation" aria-label="main navigation">
-      <div class="container">
-        <div class="navbar-item">
-          <router-link to="/">All contributions</router-link>
-        </div>
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <router-link v-if="isAuthenticated" to="/frontmen"
-              >Admin</router-link
-            >
-          </div>
-          <div class="navbar-item">
-            <div v-if="!isAuthenticated" class="buttons">
-              <router-link
-                to="/frontmen/login"
-                class="button is-warning is-family-secondary is-radiusless"
-                >Admin Login</router-link
-              >
-            </div>
-          </div>
-        </div>
+    <nav
+      class="navbar is-primary"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-item">
+        <router-link
+          v-if="isAuthenticated"
+          :to="getNavButtonProps.path"
+          class="button is-warning is-family-secondary is-radiusless"
+        >
+          {{ getNavButtonProps.text }}
+        </router-link>
       </div>
     </nav>
     <header class="hero is-primary">
@@ -28,12 +20,14 @@
         <div class="container">
           <div class="columns">
             <div class="column">
-              <img
-                src="@/static/fm-monogram-logo.svg"
-                width="50"
-                class="is-pulled-left"
-                :style="{ marginRight: '2rem' }"
-              />
+              <router-link to="/">
+                <img
+                  src="@/static/fm-monogram-logo.svg"
+                  width="50"
+                  class="is-pulled-left"
+                  :style="{ marginRight: '2rem' }"
+                />
+              </router-link>
               <h1 class="title is-family-secondary">
                 FrontMen Open Source
               </h1>
@@ -46,9 +40,6 @@
               <img width="220px" src="@/static/heart-beating.gif" />
             </div>
           </div>
-          <div class="columns">
-            <div class="column"></div>
-          </div>
         </div>
       </div>
     </header>
@@ -60,7 +51,21 @@ export default {
   name: 'Header',
   data() {
     return {
-      isAuthenticated: false
+      isAuthenticated: false,
+      currentPath: this.$router.currentRoute.path
+    }
+  },
+  computed: {
+    getNavButtonProps() {
+      if (this.isAuthenticated) {
+        if (this.currentPath === '/') {
+          return { path: '/frontmen', text: 'Admin' }
+        }
+        if (this.currentPath === '/frontmen') {
+          return { path: '/', text: 'Home' }
+        }
+      }
+      return { path: '/frontmen/login', text: 'Admin Login' }
     }
   },
   mounted() {
@@ -68,3 +73,16 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.navbar {
+  justify-content: flex-end;
+  text-align: right;
+  padding-right: 0.75rem;
+}
+
+.hero-body {
+  padding-top: 0.75rem;
+  padding-bottom: 2rem;
+}
+</style>
