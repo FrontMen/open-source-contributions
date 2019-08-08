@@ -6,16 +6,22 @@
       </b-table-column>
       <template v-if="props.row.repository">
         <b-table-column field="owner" label="Owner">
-          <img :src="props.row.repository.owner.avatarUrl" width="20" />
-          {{ props.row.repository.owner.login }}
+          <div>
+            <img :src="props.row.repository.owner.avatarUrl" width="20" />
+            {{ props.row.repository.owner.login }}
+          </div>
         </b-table-column>
         <b-table-column field="stars" label="Stars">
-          <b-icon icon="star" size="is-small" />
-          {{ props.row.repository.stargazers.totalCount }}
+          <div>
+            <b-icon icon="star" size="is-small" />
+            {{ props.row.repository.stargazers.totalCount }}
+          </div>
         </b-table-column>
         <b-table-column field="forks" label="Forks">
-          <b-icon icon="source-fork" size="is-small" />
-          {{ props.row.repository.forks.totalCount }}
+          <div>
+            <b-icon icon="source-fork" size="is-small" />
+            {{ props.row.repository.forks.totalCount }}
+          </div>
         </b-table-column>
         <b-table-column field="data" label="Created">
           <span class="tag is-info is-rounded">
@@ -37,23 +43,25 @@
         Edit or remove this entry to cleanup the database.
       </b-table-column>
       <b-table-column field="actions" label="Actions">
-        <IconButton
-          type="is-primary"
-          icon="pencil"
-          mobile-text="EDIT"
-          @click="$emit('updateProject', props.row.id)"
-        />
-        <IconButton
-          type="is-danger"
-          icon="delete"
-          mobile-text="DELETE"
-          @click="
-            $emit('setNotification', {
-              type: 'deleteProject',
-              targetId: props.row.id
-            })
-          "
-        />
+        <div>
+          <IconButton
+            type="is-primary"
+            icon="pencil"
+            mobile-text="EDIT"
+            @click="$emit('updateProject', props.row.id)"
+          />
+          <IconButton
+            type="is-danger"
+            icon="delete"
+            mobile-text="DELETE"
+            @click="
+              $emit('setNotification', {
+                type: 'deleteProject',
+                targetId: props.row.id
+              })
+            "
+          />
+        </div>
       </b-table-column>
     </template>
     <template slot="empty">
@@ -91,5 +99,9 @@ export default {
 .icon-button {
   width: 2.25rem;
   height: 2.25rem;
+}
+
+.tag {
+  width: 6rem;
 }
 </style>
