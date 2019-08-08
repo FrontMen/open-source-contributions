@@ -6,8 +6,8 @@
       aria-label="main navigation"
     >
       <div class="navbar-item">
+        {{ isAuthenticated }}
         <router-link
-          v-if="isAuthenticated"
           :to="getNavButtonProps.path"
           class="button is-warning is-family-secondary is-radiusless"
         >
