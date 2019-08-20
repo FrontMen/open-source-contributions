@@ -1,4 +1,6 @@
-import pkg from './package'
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 export default {
   mode: 'universal',
@@ -56,7 +58,7 @@ export default {
     tokenExpires: 10, // optional, default: 7 (days)
     clientConfigs: {
       default: {
-        httpEndpoint: 'https://secret-badlands-67018.herokuapp.com/'
+        httpEndpoint: process.env.API_HOST
       }
     }
   },
