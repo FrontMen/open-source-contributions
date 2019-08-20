@@ -1,6 +1,16 @@
 {
+  "name": "open-source-contributions",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "dependencies": {
     "lerna": "^3.16.4"
   },
-  "name": "open-source-contributions"
+  "scripts": {
+    "dev": "lerna run dev --parallel",
+    "new-version": "lerna version --conventional-commits --yes"
+  }
 }
