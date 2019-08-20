@@ -1,22 +1,12 @@
-# frontmen-opensource
+# WEB
 
-> Frontmen Open Source contributions
+A Nuxt web app to show and administrate our open source contributions.
 
-## Build Setup
+## Getting started
 
-``` bash
-# install dependencies
-$ yarn install
+1. Make sure you run `yarn` in the root of the workspace to install all the dependencies of all the packages (including this one).
+2. To run the WEB app independently, run `yarn dev` in this folder. To run both the API and the WEB app, please run `yarn dev` in the root of the workspace to run both in parallel. Please note that the WEB server relies on the API running on http://localhost:4000 for its Apollo Client.
 
-# serve with hot reload at localhost:3000
-$ yarn run dev
-
-# build for production and launch server
-$ yarn run build
-$ yarn start
-
-# generate static project
-$ yarn run generate
-```
+## Nuxt
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
