@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateRepoForm should match the snapshot 1`] = `
+<section class="section">
+  <div class="container">
+    <h1 class="title">Add a repository</h1>
+    <b-field-stub label="Github Repository" message="test" addons="true">
+      <b-input-stub icon="github-circle" usehtml5validation="true" value="" type="text" hascounter="true" customclass="" placeholder="owner/repo"></b-input-stub>
+    </b-field-stub>
+    <b-collapse-stub animation="fade" ariaid="">
+      <b-field-stub label="Title" message="title" addons="true">
+        <b-input-stub maxlength="200" usehtml5validation="true" value="" type="text" hascounter="true" customclass=""></b-input-stub>
+      </b-field-stub>
+      <b-field-stub label="Description" message="description" addons="true">
+        <b-input-stub maxlength="400" usehtml5validation="true" value="" type="textarea" hascounter="true" customclass=""></b-input-stub>
+      </b-field-stub> <br>
+    </b-collapse-stub>
+    <b-button-stub iconleft="cancel" nativetype="button" tag="button" class="is-radiusless is-family-secondary cancel-button">
+      CANCEL
+    </b-button-stub>
+    <b-button-stub iconleft="check" nativetype="button" tag="button" class="is-warning is-family-secondary is-radiusless	">
+      CHECK
+    </b-button-stub>
+  </div>
+</section>
+`;

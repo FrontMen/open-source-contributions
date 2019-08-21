@@ -14,13 +14,13 @@
         &nbsp;
         <span class="icon-info-wrapper">
           <b-icon icon="source-fork" />
-          <span class="icon-info-count">
+          <span class="icon-info-count" data-testid="fork-count">
             {{ forkCount }}
           </span>
         </span>
       </div>
       <div class="column is-4 align-right">
-        <a :href="url" target="_blank">
+        <a :href="url" target="_blank" class="source-link">
           <b-button
             icon-left="github-circle"
             class="is-warning is-family-secondary is-radiusless"

@@ -48,6 +48,7 @@ import {
   createContribution,
   deleteContribution
 } from '@/apollo/mutations/mutations.js'
+import replaceHyphens from '@/utils/replaceHyphens'
 
 export default {
   name: 'AdminOverview',
@@ -170,10 +171,6 @@ export default {
       this.isCreating = !this.isCreating
       this.resetProjectForm()
     },
-    replaceHypens(s) {
-      const string = s.replace('-', ' ')
-      return string.charAt(0).toUpperCase() + string.slice(1)
-    },
     setNotification({ type, targetId }) {
       this.currentNotification = notificationMessages[type]
       this.targetId = targetId
@@ -207,7 +204,7 @@ export default {
         } else {
           this.projectForm = {
             ...this.projectForm,
-            title: this.replaceHypens(project.name),
+            title: replaceHyphens(project.name),
             description: project.description,
             name: project.owner.login,
             avatar: project.owner.avatar_url,
