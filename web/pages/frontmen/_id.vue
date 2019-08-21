@@ -21,7 +21,6 @@
     />
   </div>
 </template>
-
 <script>
 import { inputMessages, notificationMessages } from '@/constants/messages.js'
 import { updateContribution } from '@/apollo/mutations/mutations.js'
