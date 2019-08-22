@@ -1,0 +1,52 @@
+type Contribution {
+  title: String
+  description: String
+  repositoryId: String!
+  id: ID!
+}
+
+type deletedContribution {
+  id: ID!
+}
+
+input getContributionInput {
+  id: ID!
+}
+
+input deleteContributionInput {
+  id: ID!
+}
+
+input addContributionInput {
+  title: String
+  description: String
+  repositoryId: String!
+}
+
+input updateContributionDataInput {
+  title: String
+  description: String
+  repositoryId: String
+}
+
+input updateContributionInput {
+  id: ID!
+  newData: updateContributionDataInput!
+}
+
+input verifyTokenInput {
+  token: String!
+}
+
+type Query {
+  getContributions: [Contribution]
+  getContribution(input: getContributionInput): Contribution
+  getToken: String
+}
+
+type Mutation {
+  addContribution(input: addContributionInput!): Contribution
+  updateContribution(input: updateContributionInput!): Contribution
+  deleteContribution(input: deleteContributionInput!): deletedContribution
+  verifyToken(input: verifyTokenInput): Boolean!
+}

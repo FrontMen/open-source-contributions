@@ -1,5 +1,5 @@
 {
-  "name": "frontmen-opensource",
+  "name": "web",
   "version": "1.0.0",
   "description": "Frontmen Open Source contributions",
   "author": "Frontmen",
@@ -40,6 +40,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
+    "dot-env": "^0.0.1",
     "eslint": "^5.15.1",
     "eslint-config-prettier": "^4.3.0",
     "eslint-config-standard": "^13.0.1",
