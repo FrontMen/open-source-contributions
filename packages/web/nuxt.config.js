@@ -1,7 +1,7 @@
-//if (process.env.NODE_ENV !== 'production') {
-require('dotenv').config()
-//console.log
-//}
+// comment out this conditional to run nuxt generate locally
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 export default {
   mode: 'universal',
