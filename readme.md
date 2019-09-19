@@ -23,3 +23,7 @@ Running the project:
 To add a dependencies to a workspace/package use `yarn workspace <name-of-workspace> add <name-of-dependency>`. (Note that the name of the workspace is the name key in the `package.json` of the package, such as "web" or "api".)This properly installs the dependency using yarn workspaces. To learn more about yarn workspaces, please see: https://yarnpkg.com/lang/en/docs/workspaces/
 
 To add a dependency to the root of the workspace use `yarn add -W <name-of-dependency>`.
+
+### Workspace
+
+There are vscode workspace settings inside the repo to make sure linting works correctly on both Windows and UNIX based OS.
